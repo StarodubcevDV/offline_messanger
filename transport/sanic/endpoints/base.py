@@ -14,6 +14,6 @@ class BaseEndpoint(SanicEndpoint):
         session = database.make_session()
 
         try:
-            return await super()._method(request, body,session, *args, **kwargs)
+            return await super()._method(request, body, session, *args, **kwargs)
         except SanicException as e:
             return await self.make_response_json(status=e.status_code, message=str(e))

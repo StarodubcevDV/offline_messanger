@@ -2,35 +2,35 @@ from sanic.request import Request
 from sanic.response import BaseHTTPResponse
 
 from transport.sanic.endpoints import BaseEndpoint
-from transport.sanic.exceptions import SanicEmployeeNotFound, SanicPasswordHashException
+from transport.sanic.exceptions import SanicUserNotFound, SanicPasswordHashException
 
-from api.request import RequestCreateEmployeeDto
+from api.request import RequestCreateUserDto
 
-from db.queries import employee as employee_queries
-from db.exceptions import DBEmployeeNotExistsException
+from db.queries import user as user_queries
+from db.exceptions import DBUserNotExistsException
 
 from helpers.password import check_hash, CheckPasswordHashException
 from helpers.auth import create_token
 
 
-class AuthEmployeeEndpoint(BaseEndpoint):
+class AuthUserEndpoint(BaseEndpoint):
 
     async def method_post(self, request: Request, body: dict, session, *args, **kwargs) -> BaseHTTPResponse:
 
-        request_model = RequestCreateEmployeeDto(body)
+        request_model = RequestCreateUserDto(body)
 
         try:
-            db_employee = employee_queries.get_employee(session, login=request_model.login)
-        except DBEmployeeNotExistsException:
-            raise SanicEmployeeNotFound('Employee not found')
+            db_user = user_queries.get_user(session, login=request_model.login)
+        except DBUserNotExistsException:
+            raise SanicUserNotFound('User not found')
 
         try:
-            check_hash(request_model.password, db_employee.password)
+            check_hash(request_model.password, db_user.password)
         except CheckPasswordHashException:
             raise SanicPasswordHashException('Wrong password')
 
         payload = {
-            'eid': db_employee.id,
+            'eid': db_user.id,
         }
 
         response_body = {

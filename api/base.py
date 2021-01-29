@@ -27,26 +27,17 @@ class ResponseDto:
     __schema__: Schema
 
     def __init__(self, obj: object):
-        # properties: dict
-        # properties = {}
-        # for prop in dir(obj):
-        #     if not prop.startswith('_') and not prop.endswith('_'):
-        #         attr = getattr(obj, prop)
-        #         if not callable(attr):
-        #             properties['prop'] = attr
-        #
-        # self._data = properties
 
         properties = {
             prop: value
             for prop in dir(obj)
             if not prop.startswith('_')
             and not prop.endswith('_')
-               and not callable(value := getattr(obj, prop))
+            and not callable(value := getattr(obj, prop))
         }
 
         try:
-            self._data = self.__schema__(unknown= EXCLUDE).load(properties)
+            self._data = self.__schema__(unknown=EXCLUDE).load(properties)
         except ValidationError as error:
             raise ApiResponseValidationException(error.messages)
 

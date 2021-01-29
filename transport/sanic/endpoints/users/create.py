@@ -1,23 +1,23 @@
 from sanic.request import Request
 from sanic.response import BaseHTTPResponse
 
-from api.request import RequestCreateEmployeeDto
-from api.response import ResponseEmployeeDto
+from api.request import RequestCreateUserDto
+from api.response import ResponseUserDto
 from transport.sanic.endpoints import BaseEndpoint
-from transport.sanic.exceptions import SanicPasswordHashException, SanicDBException, SanicEmployeeConflictException
+from transport.sanic.exceptions import SanicPasswordHashException, SanicDBException, SanicUserConflictException
 
-from db.queries import employee as employee_queries
-from db.exceptions import DBDataException, DBIntegrityException, DBEmployeeExistsException
+from db.queries import user as user_queries
+from db.exceptions import DBDataException, DBIntegrityException, DBUserExistsException
 
 from helpers.password import generate_hash
 from helpers.password import GeneratePasswordHashException
 
 
-class CreateEmployeeEndpoint(BaseEndpoint):
+class CreateUserEndpoint(BaseEndpoint):
 
     async def method_post(self, request: Request, body: dict, session, *args, **kwargs) -> BaseHTTPResponse:
 
-        request_model = RequestCreateEmployeeDto(body)
+        request_model = RequestCreateUserDto(body)
 
         try:
             hashed_password = generate_hash(request_model.password)
@@ -25,15 +25,15 @@ class CreateEmployeeEndpoint(BaseEndpoint):
             raise SanicPasswordHashException(str(e))
 
         try:
-            db_employee = employee_queries.create_employee(session, request_model, hashed_password)
-        except DBEmployeeExistsException as e:
-            raise SanicEmployeeConflictException('Login is busy')
+            db_user = user_queries.create_user(session, request_model, hashed_password)
+        except DBUserExistsException as e:
+            raise SanicUserConflictException('Login is busy')
 
         try:
             session.commit_session()
         except (DBDataException, DBIntegrityException) as e:
             raise SanicDBException(str(e))
 
-        response_model = ResponseEmployeeDto(db_employee)
+        response_model = ResponseUserDto(db_user)
 
         return await self.make_response_json(body=response_model.dump(), status=201)

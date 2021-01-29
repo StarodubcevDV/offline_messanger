@@ -1,4 +1,4 @@
 from .base import BaseEndpoint
-from .employees.create import CreateEmployeeEndpoint
-from .employees.auth import AuthEmployeeEndpoint
+from .users.create import CreateUserEndpoint
+from .users.auth import AuthUserEndpoint
 from .health import HealthEndpoint

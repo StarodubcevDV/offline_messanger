@@ -8,6 +8,6 @@ from transport.sanic import endpoints
 def get_routes(config: ApplicationConfig, context: Context) -> Tuple:
     return (
         endpoints.HealthEndpoint(config=config, context=context, uri='/', methods=('GET', 'POST')),
-        endpoints.CreateEmployeeEndpoint(config, context, uri='/employee', methods=['POST']),
-        endpoints.AuthEmployeeEndpoint(config, context, uri='/employee/auth', methods=['POST']),
+        endpoints.CreateUserEndpoint(config, context, uri='/user', methods=['POST']),
+        endpoints.AuthUserEndpoint(config, context, uri='/user/auth', methods=['POST']),
     )
