@@ -10,4 +10,5 @@ def get_routes(config: ApplicationConfig, context: Context) -> Tuple:
         endpoints.HealthEndpoint(config=config, context=context, uri='/', methods=('GET', 'POST')),
         endpoints.CreateUserEndpoint(config, context, uri='/user', methods=['POST']),
         endpoints.AuthUserEndpoint(config, context, uri='/user/auth', methods=['POST']),
+        endpoints.UserEndpoint(config, context, uri='/user/<uid:int>', methods=['GET', 'PATCH'], auth_required=True),
     )

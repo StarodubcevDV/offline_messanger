@@ -30,7 +30,7 @@ class AuthUserEndpoint(BaseEndpoint):
             raise SanicPasswordHashException('Wrong password')
 
         payload = {
-            'eid': db_user.id,
+            'uid': db_user.id,
         }
 
         response_body = {

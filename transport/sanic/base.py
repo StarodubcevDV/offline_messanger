@@ -6,18 +6,40 @@ from sanic.response import BaseHTTPResponse, json
 
 from configs.config import ApplicationConfig
 from context import Context
+from helpers.auth import read_token, ReadTokenException
+from transport.sanic.exceptions import SanicAuthException
 
 
 class SanicEndpoint:
 
-    async def __call__(self, *args, **kwargs) -> BaseHTTPResponse:
-        return await self.handler(*args, **kwargs)
+    async def __call__(self, request: Request, *args, **kwargs) -> BaseHTTPResponse:
 
-    def __init__(self, config: ApplicationConfig, context: Context, uri: str, methods: Iterable, *args, **kwargs):
+        if self.auth_required:
+            try:
+                token = {
+                    'token': self.import_body_auth(request)
+                }
+            except SanicAuthException as e:
+                return await self.make_response_json(status=e.status_code)
+            else:
+                kwargs.update(token)
+
+        return await self.handler(request, *args, **kwargs)
+
+    def __init__(
+            self,
+            config: ApplicationConfig,
+            context: Context,
+            uri: str,
+            methods: Iterable,
+            auth_required: bool = False,
+            *args, **kwargs
+    ):
         self.config = config
         self.uri = uri
         self.methods = methods
         self.context = context
+        self.auth_required = auth_required
         self.__name__ = self.__class__.__name__
 
     @staticmethod
@@ -46,6 +68,14 @@ class SanicEndpoint:
             for header, value in request.headers.items()
             if header.lower().startswith('x-')
         }
+
+    @staticmethod
+    def import_body_auth(request: Request) -> dict:
+        token = request.headers.get('Authorization')
+        try:
+            return read_token(token)
+        except ReadTokenException as e:
+            raise SanicAuthException(str(e))
 
     async def handler(self, request: Request, *args, **kwargs) -> BaseHTTPResponse:
         body = {}

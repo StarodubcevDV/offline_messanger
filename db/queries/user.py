@@ -1,4 +1,5 @@
-from api.request import RequestCreateUserDto
+from api.request import RequestCreateUserDto, RequestPatchUserDto
+
 from db.database import DBSession
 from db.exceptions import DBUserExistsException, DBUserNotExistsException
 from db.models import DBUser
@@ -31,4 +32,15 @@ def get_user(session: DBSession, login: str = None, user_id: int = None) -> DBUs
 
     if db_user is None:
         raise DBUserNotExistsException
+    return db_user
+
+
+def patch_user(session: DBSession, user: RequestPatchUserDto, user_id: int = None):
+
+    db_user = session.get_user_by_id(user_id)
+
+    for attr in user.fields:
+        if hasattr(user, attr):
+            setattr(db_user, attr, getattr(user, attr))
+
     return db_user
