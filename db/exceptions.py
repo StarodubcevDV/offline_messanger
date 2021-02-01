@@ -20,3 +20,7 @@ class DBUserSenderNotExistsException(Exception):
 
 class DBUserReceiverNotExistsException(Exception):
     pass
+
+
+class DBMessageNotExistsException(Exception):
+    pass

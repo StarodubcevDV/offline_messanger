@@ -36,7 +36,7 @@ def get_user(session: DBSession, *, login: str = None, user_id: int = None) -> D
 
 def patch_user(session: DBSession, user: RequestPatchUserDto, user_id: int = None) -> DBUser:
 
-    db_user = session.get_user_by_id(user_id)
+    db_user = get_user(session, user_id=user_id)
 
     for attr in user.fields:
         if hasattr(user, attr):

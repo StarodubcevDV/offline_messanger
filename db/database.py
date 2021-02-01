@@ -34,8 +34,14 @@ class DBSession:
     def get_user_by_id(self, eid: int) -> DBUser:
         return self._session.query(DBUser).filter(DBUser.id == eid, DBUser.is_delete != 1).first()
 
+    def get_message_by_id(self, mid: int) -> DBMessage:
+        return self._session.query(DBMessage).filter(DBMessage.id == mid, DBMessage.is_delete != 1).first()
+
     def get_messages_by_receiver_id(self, receiver_id: int) -> List['DBMessage']:
-        return self._session.query(DBMessage).filter(DBMessage.receiver_id == receiver_id).all()
+        return self._session.query(DBMessage).filter(DBMessage.receiver_id == receiver_id, DBMessage.is_delete != 1).all()
+
+    def get_messages_by_sender_id(self, sender_id: int) -> List['DBMessage']:
+        return self._session.query(DBMessage).filter(DBMessage.sender_id == sender_id, DBMessage.is_delete != 1).all()
 
     def commit_session(self, need_close: bool = False):
         try:
