@@ -1,9 +1,11 @@
+from typing import List
+
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import IntegrityError, DataError
 from sqlalchemy.orm import sessionmaker, Session
 
 from db.exceptions import DBIntegrityException, DBDataException
-from db.models import BaseModel, DBUser
+from db.models import BaseModel, DBUser, DBMessage
 
 
 class DBSession:
@@ -31,6 +33,9 @@ class DBSession:
 
     def get_user_by_id(self, eid: int) -> DBUser:
         return self._session.query(DBUser).filter(DBUser.id == eid, DBUser.is_delete != 1).first()
+
+    def get_messages_by_receiver_id(self, receiver_id: int) -> List['DBMessage']:
+        return self._session.query(DBMessage).filter(DBMessage.receiver_id == receiver_id).all()
 
     def commit_session(self, need_close: bool = False):
         try:

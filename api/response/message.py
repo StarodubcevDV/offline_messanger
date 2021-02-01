@@ -11,7 +11,7 @@ class ResponseMessageDtoSchema(Schema):
     receiver_id = fields.Int(required=True)
     created_at = fields.DateTime(required=True)
     update_at = fields.DateTime(required=True)
-    text = fields.Str(required=True)
+    message = fields.Str(required=True)
 
     @pre_load
     @post_load

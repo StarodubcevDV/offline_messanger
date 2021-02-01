@@ -5,7 +5,7 @@ import jwt
 from helpers.auth.exceptions import ReadTokenException
 
 
-secret = 'SUPER_SECRET_KEY'
+secret = '4221'
 
 
 def create_token(payload: dict) -> str:

@@ -8,7 +8,7 @@ from db.exceptions import DBUserSenderNotExistsException, DBUserReceiverNotExist
     DBIntegrityException
 from db.queries import message as message_queries
 from transport.sanic.endpoints import BaseEndpoint
-from transport.sanic.exceptions import SanicUserConflictException, SanicDBException
+from transport.sanic.exceptions import SanicDBException, SanicUserNotFound
 
 
 class CreateMessageEndpoint(BaseEndpoint):
@@ -31,7 +31,7 @@ class CreateMessageEndpoint(BaseEndpoint):
         try:
             db_message = message_queries.create_message(session, request_model, sender_id=sender_id)
         except (DBUserSenderNotExistsException, DBUserReceiverNotExistsException) as e:
-            raise SanicUserConflictException(str(e))
+            raise SanicUserNotFound(str(e))
 
         try:
             session.commit_session()
