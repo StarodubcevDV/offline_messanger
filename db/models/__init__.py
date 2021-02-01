@@ -1,5 +1,5 @@
 from .base import BaseModel
 from .user import DBUser
-from .messages import DBMessages
+from .messages import DBMessage
 
 

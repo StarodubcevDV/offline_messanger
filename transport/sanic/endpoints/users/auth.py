@@ -4,7 +4,7 @@ from sanic.response import BaseHTTPResponse
 from transport.sanic.endpoints import BaseEndpoint
 from transport.sanic.exceptions import SanicUserNotFound, SanicPasswordHashException
 
-from api.request import RequestCreateUserDto
+from api.request import RequestAuthUserDto
 
 from db.queries import user as user_queries
 from db.exceptions import DBUserNotExistsException
@@ -17,7 +17,7 @@ class AuthUserEndpoint(BaseEndpoint):
 
     async def method_post(self, request: Request, body: dict, session, *args, **kwargs) -> BaseHTTPResponse:
 
-        request_model = RequestCreateUserDto(body)
+        request_model = RequestAuthUserDto(body)
 
         try:
             db_user = user_queries.get_user(session, login=request_model.login)

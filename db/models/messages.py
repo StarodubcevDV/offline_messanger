@@ -3,7 +3,7 @@ from sqlalchemy import Column, VARCHAR, Integer, BOOLEAN
 from db.models import BaseModel
 
 
-class DBMessages(BaseModel):
+class DBMessage(BaseModel):
 
     __tablename__ = 'messages'
 

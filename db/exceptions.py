@@ -12,3 +12,11 @@ class DBUserExistsException(Exception):
 
 class DBUserNotExistsException(Exception):
     pass
+
+
+class DBUserSenderNotExistsException(Exception):
+    pass
+
+
+class DBUserReceiverNotExistsException(Exception):
+    pass

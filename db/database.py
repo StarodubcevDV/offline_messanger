@@ -27,10 +27,10 @@ class DBSession:
             raise DBDataException(e)
 
     def get_user_by_login(self, login: str) -> DBUser:
-        return self._session.query(DBUser).filter(DBUser.login == login).first()
+        return self._session.query(DBUser).filter(DBUser.login == login, DBUser.is_delete != 1).first()
 
     def get_user_by_id(self, eid: int) -> DBUser:
-        return self._session.query(DBUser).filter(DBUser.id == eid).first()
+        return self._session.query(DBUser).filter(DBUser.id == eid, DBUser.is_delete != 1).first()
 
     def commit_session(self, need_close: bool = False):
         try:
