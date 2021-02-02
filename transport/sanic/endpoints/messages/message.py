@@ -29,7 +29,7 @@ class MessageEndpoint(BaseEndpoint):
             raise SanicMessageNotFound('Message not found')
 
         if (token.get('uid') != db_message.sender_id)\
-                or (token.get('uid') != db_message.receiver_id):
+                and (token.get('uid') != db_message.receiver_id):
             return await self.make_response_json(status=403)
 
         response_model = ResponseMessageDto(db_message)
