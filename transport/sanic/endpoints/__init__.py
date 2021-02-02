@@ -6,4 +6,5 @@ from .health import HealthEndpoint
 from .messages.create import CreateMessageEndpoint
 from .messages.get_messages import AllReceivedMessagesEndpoint
 from .messages.get_messages import AllSentMessagesEndpoint
+from .messages.get_messages import AllMessagesEndpoint
 from .messages.message import MessageEndpoint
