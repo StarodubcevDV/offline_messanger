@@ -38,17 +38,19 @@ def get_message(session: DBSession, *, message_id: int) -> DBMessage:
 
 def create_message(session: DBSession, message_dto: RequestCreateMessageDto, sender_id: int) -> DBMessage:
 
-    new_message = DBMessage(
-        sender_id=sender_id,
-        receiver_id=message_dto.receiver_id,
-        message=message_dto.message
-    )
-
     if session.get_user_by_id(sender_id) is None:
         raise DBUserSenderNotExistsException
 
-    if session.get_user_by_id(message_dto.receiver_id) is None:
+    db_receiver = session.get_user_by_login(message_dto.receiver_login)
+
+    if db_receiver is None:
         raise DBUserReceiverNotExistsException
+
+    new_message = DBMessage(
+        sender_id=sender_id,
+        receiver_id=db_receiver.id,
+        message=message_dto.message
+    )
 
     session.add_model(new_message)
     return new_message

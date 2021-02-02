@@ -4,7 +4,7 @@ from api.base import RequestDto
 
 
 class RequestCreateMessageDtoSchema(Schema):
-    receiver_id = fields.Str(required=True, allow_none=False)
+    receiver_login = fields.Str(required=True, allow_none=False)
     message = fields.Str(required=True)
 
 
