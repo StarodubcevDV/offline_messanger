@@ -2,7 +2,6 @@ from sanic.request import Request
 from sanic.response import BaseHTTPResponse
 from sanic.exceptions import SanicException
 
-from api.exceptions import ApiValidationException
 from transport.sanic.base import SanicEndpoint
 
 

@@ -9,5 +9,4 @@ class RequestCreateMessageDtoSchema(Schema):
 
 
 class RequestCreateMessageDto(RequestDto, RequestCreateMessageDtoSchema):
-
     __schema__ = RequestCreateMessageDtoSchema

@@ -18,4 +18,3 @@ def read_token(token: str) -> dict:
         return jwt.decode(token, secret, algorithms='HS256')
     except jwt.exceptions.PyJWTError as e:
         raise ReadTokenException(str(e))
-

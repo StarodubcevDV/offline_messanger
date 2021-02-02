@@ -24,4 +24,3 @@ def check_hash(pwd: str, hsh: bytes) -> None:
 
     if not result:
         raise CheckPasswordHashException
-

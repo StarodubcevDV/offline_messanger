@@ -32,5 +32,4 @@ class ResponseMessageDtoSchema(Schema):
 
 
 class ResponseMessageDto(ResponseDto, ResponseMessageDtoSchema):
-
     __schema__ = ResponseMessageDtoSchema

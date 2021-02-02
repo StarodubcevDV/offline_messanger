@@ -5,10 +5,8 @@ from api.request import RequestCreateUserDto
 from api.response import ResponseUserDto
 from transport.sanic.endpoints import BaseEndpoint
 from transport.sanic.exceptions import SanicPasswordHashException, SanicDBException, SanicUserConflictException
-
 from db.queries import user as user_queries
 from db.exceptions import DBDataException, DBIntegrityException, DBUserExistsException
-
 from helpers.password import generate_hash
 from helpers.password import GeneratePasswordHashException
 

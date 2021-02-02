@@ -70,4 +70,3 @@ class DataBase:
     def make_session(self) -> DBSession:
         session = self.session_factory()
         return DBSession(session)
-

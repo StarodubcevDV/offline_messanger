@@ -1,5 +1,4 @@
 from marshmallow import Schema, ValidationError, EXCLUDE
-from sanic.exceptions import SanicException
 
 from api.exceptions import ApiValidationException, ApiResponseValidationException
 

@@ -19,5 +19,4 @@ def configure_app(config: ApplicationConfig, context: Context):
             methods=handler.methods,
             strict_slashes=True,
         )
-
     return app

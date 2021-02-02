@@ -3,12 +3,9 @@ from sanic.response import BaseHTTPResponse
 
 from transport.sanic.endpoints import BaseEndpoint
 from transport.sanic.exceptions import SanicUserNotFound, SanicPasswordHashException
-
 from api.request import RequestAuthUserDto
-
 from db.queries import user as user_queries
 from db.exceptions import DBUserNotExistsException
-
 from helpers.password import check_hash, CheckPasswordHashException
 from helpers.auth import create_token
 

@@ -11,5 +11,4 @@ class RequestCreateUserDtoSchema(Schema):
 
 
 class RequestCreateUserDto(RequestDto, RequestCreateUserDtoSchema):
-
     __schema__ = RequestCreateUserDtoSchema

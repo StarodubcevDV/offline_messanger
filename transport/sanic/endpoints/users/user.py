@@ -85,4 +85,3 @@ class UserEndpoint(BaseEndpoint):
             raise SanicDBException(str(e))
 
         return await self.make_response_json(status=204)
-

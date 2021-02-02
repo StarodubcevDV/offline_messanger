@@ -1,5 +1,4 @@
 from api.request import RequestCreateUserDto, RequestPatchUserDto
-
 from db.database import DBSession
 from db.exceptions import DBUserExistsException, DBUserNotExistsException
 from db.models import DBUser
